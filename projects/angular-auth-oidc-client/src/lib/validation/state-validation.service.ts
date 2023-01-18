@@ -52,7 +52,7 @@ export class StateValidationService {
     }
 
     if (callbackContext.authResult.id_token) {
-      const { clientId, issValidationOff, maxIdTokenIatOffsetAllowedInSeconds, disableIatOffsetValidation, ignoreNonceAfterRefresh } =
+      const { clientId, issValidationOff, maxIdTokenIatOffsetAllowedInSeconds, disableIatOffsetValidation, ignoreNonceAfterRefresh, renewTimeBeforeTokenExpiresInSeconds } =
         this.configurationProvider.getOpenIDConfiguration(configId);
 
       toReturn.idToken = callbackContext.authResult.id_token;
@@ -90,7 +90,7 @@ export class StateValidationService {
           if (
             !this.tokenValidationService.validateIdTokenIatMaxOffset(
               toReturn.decodedIdToken,
-              maxIdTokenIatOffsetAllowedInSeconds,
+              renewTimeBeforeTokenExpiresInSeconds,
               disableIatOffsetValidation,
               configId
             )
